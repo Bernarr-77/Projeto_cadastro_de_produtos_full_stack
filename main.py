@@ -1,6 +1,6 @@
 # python -m fastapi dev .\cadastro_produtos\main.py
 
-from fastapi import FastAPI
+from fastapi import FastAPI,HTTPException
 from pydantic import BaseModel
 from itertools import count
 
@@ -32,3 +32,14 @@ def adicionar_produtos(Produto: ProdutoInput):
         )
     lista_produtos.append(novo_produto)
     return novo_produto
+
+@app.delete("/produtos/{id}")
+def deletar_produtos(id: int):
+    for index, produto in enumerate(lista_produtos):
+        if produto.id == id:
+            del lista_produtos[index]
+            return {"mensagem": "Produto deletado com sucesso"}
+        
+    raise HTTPException(status_code=404, detail="Produto não encontrado")
+        
+
