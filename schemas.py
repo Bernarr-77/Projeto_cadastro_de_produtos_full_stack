@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 class ProdutoInput(BaseModel):
-    nome: Optional[str] = None
+    nome: str
     quantidade: Optional[int] = None
     valor: Optional[float] = None
 
